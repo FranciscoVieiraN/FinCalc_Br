@@ -14,10 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.financalcbr.app.R
 import com.financalcbr.app.ui.common.CurrencyVisualTransformation
 import com.financalcbr.app.ui.common.PercentageVisualTransformation
 import java.text.NumberFormat
@@ -38,7 +40,7 @@ fun SimpleInterestScreen(
     ) {
 
         Text(
-            text = "Juros Simples",
+            text = stringResource(R.string.title_simple_interest),
             fontSize = 22.sp
         )
 
@@ -55,7 +57,7 @@ fun SimpleInterestScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text("Capital (R$)") }
+            label = { Text(stringResource(R.string.label_capital)) }
         )
 
         OutlinedTextField(
@@ -69,7 +71,7 @@ fun SimpleInterestScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text("Taxa (%)") }
+            label = { Text(stringResource(R.string.label_rate)) }
         )
 
         OutlinedTextField(
@@ -81,7 +83,7 @@ fun SimpleInterestScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text("Tempo") }
+            label = { Text(stringResource(R.string.label_time)) }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -94,15 +96,15 @@ fun SimpleInterestScreen(
             },
             enabled = state.isCalculateEnabled
         ) {
-            Text("Calcular")
+            Text(stringResource(R.string.button_calculate))
         }
 
         Spacer(modifier = Modifier.height(24.dp))
         if (state.interestResult.isNotBlank()) {
-            Text("Juros: ${currencyFormatter.format(state.interestResult.toDoubleOrNull()?:0.0)}")
+            Text("${stringResource(R.string.result_interest_label)} ${currencyFormatter.format(state.interestResult.toDoubleOrNull()?:0.0)}")
         }
         if (state.totalResult.isNotBlank()) {
-            Text("Montante: ${currencyFormatter.format(state.totalResult.toDoubleOrNull()?:0.0)}")
+            Text("${stringResource(R.string.result_amount_label)} ${currencyFormatter.format(state.totalResult.toDoubleOrNull()?:0.0)}")
         }
 
     }

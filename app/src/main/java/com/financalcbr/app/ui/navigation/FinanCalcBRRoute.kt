@@ -14,5 +14,12 @@ sealed interface FinanCalcBRRoute {
     data object SimpleInterest : FinanCalcBRRoute
 
     @Serializable
-    data object SalarioLiquido : FinanCalcBRRoute
+    data object NetSalary : FinanCalcBRRoute
+
+    @Serializable
+    data object Overtime : FinanCalcBRRoute
+
+    @Serializable
+    data object Vacation : FinanCalcBRRoute
+
 }

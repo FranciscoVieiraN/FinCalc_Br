@@ -1,3 +1,78 @@
 <resources>
+    <!-- Configurações Gerais do App -->
     <string name="app_name">FinanCalc BR</string>
+    <string name="button_ok">OK</string>
+    <string name="button_clear">Limpar</string>
+    <string name="button_calculate">Calcular</string>
+
+    <!-- Títulos de Navegação -->
+    <string name="title_calculator">Calculadora</string>
+    <string name="title_simple_interest">Juros Simples</string>
+    <string name="title_compound_interest">Juros Composto</string>
+    <string name="title_overtime">Hora Extra</string>
+    <string name="title_net_salary">Salário Líquido</string>
+    <string name="title_vacation">Calculadora de Férias</string>
+
+    <!-- Labels Comuns -->
+    <string name="label_rate">Taxa (%)</string>
+    <string name="label_time">Tempo</string>
+    <string name="label_period">Período</string>
+    <string name="period_annual">Anual</string>
+    <string name="period_monthly">Mensal</string>
+    <string name="calculation_result_title">Resultado do Cálculo</string>
+    <string name="calculation_summary_title">Resumo do Cálculo</string>
+
+    <!-- Juros Simples -->
+    <string name="label_capital">Capital (R$)</string>
+    <string name="result_interest_label">Juros:</string>
+    <string name="result_amount_label">Montante:</string>
+
+    <!-- Juros Compostos -->
+    <string name="label_initial_value">Valor inicial</string>
+    <string name="label_monthly_value">Valor mensal</string>
+    <string name="label_interest_rate">Taxa de juros</string>
+    <string name="res_total_invested">Valor total investido:</string>
+    <string name="res_total_with_interest">Valor total com juros:</string>
+    <string name="res_total_interest_only">Total em juros:</string>
+
+    <!-- Hora Extra -->
+    <string name="label_gross_salary">Salário Bruto (R$)</string>
+    <string name="label_monthly_hours">Jornada Mensal (horas)</string>
+    <string name="label_extra_hours_count">Quantidade de Horas Extras</string>
+    <string name="label_bonus_percentage">Adicional %</string>
+    <string name="label_hours_220">220h</string>
+    <string name="label_hours_180">180h</string>
+    <string name="label_percentage_50">50%</string>
+    <string name="label_percentage_100">100%</string>
+    <string name="res_common_hour">Valor da hora comum:</string>
+    <string name="res_extra_hour_value">Valor de cada hora extra:</string>
+    <string name="res_total_gross">Total Bruto a receber:</string>
+
+    <!-- Salário Líquido (CLT) -->
+    <string name="title_net_salary_clt">Cálculo de Salário Líquido (CLT)</string>
+    <string name="label_salario_bruto">Salário Bruto</string>
+    <string name="label_dependents_count">Número de Dependentes</string>
+    <string name="label_other_deductions">Outros Descontos (Pensão, Convênio, etc.)</string>
+    <string name="label_other_deductions_short">Outros Descontos</string>
+    <string name="label_inss_deduction">Desconto INSS</string>
+    <string name="label_irrf_deduction">Desconto IRRF</string>
+    <string name="label_net_salary">Salário Líquido</string>
+
+    <!-- Férias -->
+    <string name="label_vacation_days">Dias de Férias</string>
+    <string name="label_sell_vacation">Vender Férias (Abono)</string>
+    <string name="label_advance_thirteen">Adiantar 1ª Parcela 13º</string>
+    <string name="label_vacation_days_value">Valor das Férias</string>
+    <string name="label_one_third">⅓ Constitucional</string>
+    <string name="label_abono">Abono Pecuniário</string>
+    <string name="label_one_third_abono">⅓ sobre Abono</string>
+    <string name="label_thirteen_advance">Adiantamento 13º</string>
+    <string name="label_total_earnings">Total de Proventos</string>
+    <string name="label_total_deductions">Total de Descontos</string>
+    <string name="label_net_vacation">Valor Líquido a Receber</string>
+
+    <!-- Mensagens de Erro -->
+    <string name="error_invalid_salary">Informe um salário válido</string>
+    <string name="error_message">Erro</string>
+    <string name="error_salary_required">Informe o salário bruto</string>
 </resources>

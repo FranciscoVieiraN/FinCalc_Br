@@ -7,7 +7,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.financalcbr.app.ui.features.calculator.CalculatorScreen
 import com.financalcbr.app.ui.features.compound_interest.CompoundInterestScreen
+import com.financalcbr.app.ui.features.net_salary.NetSalaryScreen
+import com.financalcbr.app.ui.features.overtime.OvertimeScreen
 import com.financalcbr.app.ui.features.simple_interest.SimpleInterestScreen
+import com.financalcbr.app.ui.features.vacation.VacationScreen
 
 
 @Composable
@@ -26,6 +29,15 @@ fun FinanCalcBRNavHost(
         }
         composable<FinanCalcBRRoute.CompoundInterest> {
             CompoundInterestScreen()
+        }
+        composable<FinanCalcBRRoute.NetSalary> {
+            NetSalaryScreen()
+        }
+        composable<FinanCalcBRRoute.Overtime> {
+            OvertimeScreen()
+        }
+        composable<FinanCalcBRRoute.Vacation> {
+            VacationScreen()
         }
     }
 }

@@ -64,7 +64,9 @@ fun MainScreen() {
         destination?.hasRoute<FinanCalcBRRoute.Calculator>() == true -> "Calculadora"
         destination?.hasRoute<FinanCalcBRRoute.CompoundInterest>() == true -> "Juros Compostos"
         destination?.hasRoute<FinanCalcBRRoute.SimpleInterest>() == true -> "Juros Simples"
-        destination?.hasRoute<FinanCalcBRRoute.SalarioLiquido>() == true -> "Salário Líquido"
+        destination?.hasRoute<FinanCalcBRRoute.Overtime>()== true -> "Hora Extra"
+        destination?.hasRoute<FinanCalcBRRoute.NetSalary>() == true -> "Salário Líquido"
+        destination?.hasRoute<FinanCalcBRRoute.Vacation>() == true -> "Calculadora de Férias"
         else -> "FinanCalc BR"
     }
 
