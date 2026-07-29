@@ -7,6 +7,8 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.financalcbr.app.R
 import androidx.compose.ui.unit.dp
 import com.financalcbr.app.ui.features.compound_interest.TimePeriod
 
@@ -21,7 +23,7 @@ fun PeriodSelector(
         FilterChip(
             selected = selectedPeriod == TimePeriod.ANNUAL,
             onClick = { onPeriodSelected(TimePeriod.ANNUAL) },
-            label = { Text("Anual") }
+            label = { Text(stringResource(R.string.period_annual)) }
         )
 
         Spacer(modifier = Modifier.width(2.dp))
@@ -29,7 +31,7 @@ fun PeriodSelector(
         FilterChip(
             selected = selectedPeriod == TimePeriod.MONTHLY,
             onClick = { onPeriodSelected(TimePeriod.MONTHLY) },
-            label = { Text("Mensal") },
+            label = { Text(stringResource(R.string.period_monthly)) },
         )
     }
 }

@@ -18,10 +18,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.financalcbr.app.R
 import com.financalcbr.app.ui.common.CurrencyVisualTransformation
 import com.financalcbr.app.ui.common.PercentageVisualTransformation
 import com.financalcbr.app.ui.components.PeriodSelector
@@ -45,7 +47,7 @@ fun CompoundInterestScreen(
         OutlinedTextField(
             value = state.initialValue,
             onValueChange = { viewModel.onEvent(CompoundInterestEvent.OnInitialValueChange(it)) },
-            label = { Text("Valor inicial") },
+            label = { Text(stringResource(R.string.label_initial_value)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             visualTransformation = CurrencyVisualTransformation(),
@@ -57,7 +59,7 @@ fun CompoundInterestScreen(
         OutlinedTextField(
             value = state.monthlyValue,
             onValueChange = { viewModel.onEvent(CompoundInterestEvent.OnMonthlyValueChange(it)) },
-            label = { Text("Valor mensal") },
+            label = { Text(stringResource(R.string.label_monthly_value)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             visualTransformation = CurrencyVisualTransformation(),
@@ -73,7 +75,7 @@ fun CompoundInterestScreen(
             OutlinedTextField(
                 value = state.interestRate,
                 onValueChange = { viewModel.onEvent(CompoundInterestEvent.OnInterestRateChange(it)) },
-                label = { Text("Taxa de juros") },
+                label = { Text(stringResource(R.string.label_interest_rate)) },
                 modifier = Modifier.weight(1f),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 visualTransformation = PercentageVisualTransformation(),
@@ -106,7 +108,7 @@ fun CompoundInterestScreen(
                         )
                     )
                 },
-                label = { Text("Período") },
+                label = { Text(stringResource(R.string.label_period)) },
                 modifier = Modifier.weight(1f),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true
@@ -127,7 +129,7 @@ fun CompoundInterestScreen(
             onClick = { viewModel.onEvent(CompoundInterestEvent.OnCalculateClick) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Calcular")
+            Text(stringResource(R.string.button_calculate))
         }
     }
 
@@ -136,20 +138,20 @@ fun CompoundInterestScreen(
             onDismissRequest = { viewModel.onEvent(CompoundInterestEvent.OnDismissDialog) },
             confirmButton = {
                 TextButton(onClick = { viewModel.onEvent(CompoundInterestEvent.OnDismissDialog) }) {
-                    Text("OK")
+                    Text(stringResource(R.string.button_ok))
                 }
             },
             title = {
                 Text(
-                    text = "Resultado do Cálculo",
+                    text = stringResource(R.string.calculation_result_title),
                     style = MaterialTheme.typography.titleLarge
                 )
             },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    ResultRow("Valor total investido:", currencyFormatter.format(state.totalInvested))
-                    ResultRow("Valor total com juros:", currencyFormatter.format(state.totalWithInterest))
-                    ResultRow("Total em juros:", currencyFormatter.format(state.interestEarned), isHighlight = true)
+                    ResultRow(stringResource(R.string.res_total_invested), currencyFormatter.format(state.totalInvested))
+                    ResultRow(stringResource(R.string.res_total_with_interest), currencyFormatter.format(state.totalWithInterest))
+                    ResultRow(stringResource(R.string.res_total_interest_only), currencyFormatter.format(state.interestEarned), isHighlight = true)
                 }
             }
         )
