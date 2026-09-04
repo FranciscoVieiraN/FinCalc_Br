@@ -15,7 +15,7 @@
 
     <!-- Labels Comuns -->
     <string name="label_rate">Taxa (%)</string>
-    <string name="label_time">Tempo</string>
+    <string name="label_time">Tempo(Meses)</string>
     <string name="label_period">Período</string>
     <string name="period_annual">Anual</string>
     <string name="period_monthly">Mensal</string>
@@ -70,6 +70,10 @@
     <string name="label_total_earnings">Total de Proventos</string>
     <string name="label_total_deductions">Total de Descontos</string>
     <string name="label_net_vacation">Valor Líquido a Receber</string>
+
+    <!-- Seções do Resumo -->
+    <string name="label_proventos">Proventos</string>
+    <string name="label_descontos">Descontos</string>
 
     <!-- Mensagens de Erro -->
     <string name="error_invalid_salary">Informe um salário válido</string>

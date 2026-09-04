@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,7 +23,10 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -49,7 +53,7 @@ class MainActivity : ComponentActivity() {
 
 
 @SuppressLint("RestrictedApi")
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun MainScreen() {
 
@@ -70,45 +74,50 @@ fun MainScreen() {
         else -> "FinanCalc BR"
     }
 
-
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            NavDrawer { routeObject ->
-                scope.launch { drawerState.close() }
-                navController.navigate(routeObject) {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .semantics { testTagsAsResourceId = true }
+    ) {
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                NavDrawer { routeObject ->
+                    scope.launch { drawerState.close() }
+                    navController.navigate(routeObject) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                    launchSingleTop = true
-                    restoreState = true
                 }
             }
-        }
-    ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(currentTitle) },
-                    modifier = Modifier.padding(top = 5.dp),
-                    navigationIcon = {
-                        IconButton(
-                            onClick = { scope.launch { drawerState.open() } }
-                        ) {
-                            Icon(Icons.Default.Menu, contentDescription = "Menu")
+        ) {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = { Text(currentTitle) },
+                        modifier = Modifier.padding(top = 5.dp),
+                        navigationIcon = {
+                            IconButton(
+                                onClick = { scope.launch { drawerState.open() } }
+                            ) {
+                                Icon(Icons.Default.Menu, contentDescription = "Menu")
+                            }
                         }
-                    }
-                )
-            }
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            ) {
-                FinanCalcBRNavHost(
-                    navController = navController
-                )
+                    )
+                }
+            ) { padding ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) {
+                    FinanCalcBRNavHost(
+                        navController = navController
+                    )
+                }
             }
         }
     }

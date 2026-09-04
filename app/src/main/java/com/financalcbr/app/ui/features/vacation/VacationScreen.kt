@@ -1,6 +1,8 @@
 package com.financalcbr.app.ui.features.vacation
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -25,8 +28,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +41,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.financalcbr.app.R
 import com.financalcbr.app.ui.common.CurrencyVisualTransformation
+import com.financalcbr.app.ui.common.TestTags
+import com.financalcbr.app.ui.theme.Dimens
+import com.financalcbr.app.ui.theme.FinanCalcBRTheme
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -59,9 +69,9 @@ fun VacationContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(Dimens.Space16)
             .verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+        verticalArrangement = Arrangement.spacedBy(Dimens.Space16)
     ) {
         Text(
             text = stringResource(R.string.title_vacation),
@@ -72,7 +82,10 @@ fun VacationContent(
             value = state.grossSalary,
             onValueChange = { onEvent(VacationUiEvent.OnGrossSalaryChanged(it)) },
             label = { Text(stringResource(R.string.label_salario_bruto)) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(TestTags.VACATION.INPUT_GROSS_SALARY),
+            shape = RoundedCornerShape(Dimens.CornerMedium),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             visualTransformation = CurrencyVisualTransformation(),
             isError = state.grossSalaryError != null,
@@ -83,7 +96,10 @@ fun VacationContent(
             value = state.vacationDays,
             onValueChange = { onEvent(VacationUiEvent.OnVacationDaysChanged(it)) },
             label = { Text(stringResource(R.string.label_vacation_days)) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(TestTags.VACATION.INPUT_VACATION_DAYS),
+            shape = RoundedCornerShape(Dimens.CornerMedium),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             isError = state.vacationDaysError != null,
             supportingText = state.vacationDaysError?.let { { Text(it) } }
@@ -93,48 +109,63 @@ fun VacationContent(
             value = state.dependentsCount,
             onValueChange = { onEvent(VacationUiEvent.OnDependentsChanged(it)) },
             label = { Text(stringResource(R.string.label_dependents_count)) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(TestTags.VACATION.INPUT_DEPENDENTS),
+            shape = RoundedCornerShape(Dimens.CornerMedium),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Dimens.Space8)
         ) {
             FilterChip(
                 selected = state.sellVacation,
                 onClick = { onEvent(VacationUiEvent.OnToggleSellVacation) },
                 label = { Text(stringResource(R.string.label_sell_vacation)) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag(TestTags.VACATION.SWITCH_SELL_VACATION)
             )
             FilterChip(
                 selected = state.advanceThirteen,
                 onClick = { onEvent(VacationUiEvent.OnToggleAdvanceThirteen) },
                 label = { Text(stringResource(R.string.label_advance_thirteen)) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag(TestTags.VACATION.SWITCH_ADVANCE_THIRTEEN)
             )
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(Dimens.Space8)
         ) {
             OutlinedButton(
                 onClick = { onEvent(VacationUiEvent.OnClearClicked) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .height(Dimens.ButtonHeight)
+                    .testTag(TestTags.VACATION.BTN_CLEAR),
+                shape = RoundedCornerShape(Dimens.CornerMedium)
             ) {
                 Text(stringResource(R.string.button_clear))
             }
             Button(
                 onClick = { onEvent(VacationUiEvent.OnCalculateClicked) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
+                    .height(Dimens.ButtonHeight)
+                    .testTag(TestTags.VACATION.BTN_CALCULATE),
+                shape = RoundedCornerShape(Dimens.CornerMedium)
             ) {
                 Text(stringResource(R.string.button_calculate))
             }
         }
 
         if (state.showResults) {
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(Dimens.Space8))
             VacationResultCard(state, currencyFormatter)
         }
     }
@@ -143,28 +174,38 @@ fun VacationContent(
 @Composable
 fun VacationResultCard(state: VacationUiState, formatter: NumberFormat) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag(TestTags.VACATION.CARD_RESULT),
+        shape = RoundedCornerShape(Dimens.CornerLarge),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = Dimens.CardElevation
+        )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            modifier = Modifier.padding(Dimens.Space16),
+            verticalArrangement = Arrangement.spacedBy(Dimens.Space8)
         ) {
             Text(
                 text = stringResource(R.string.calculation_summary_title),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleMedium
             )
-            HorizontalDivider()
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
+            SectionHeader(stringResource(R.string.label_proventos))
             EarningsRow(
                 stringResource(R.string.label_vacation_days_value),
-                formatter.format(state.vacationDaysValue)
+                formatter.format(state.vacationDaysValue),
+                valueTestTag = TestTags.VACATION.TXT_VACATION_DAYS_VALUE
             )
             EarningsRow(
                 stringResource(R.string.label_one_third),
-                formatter.format(state.oneThirdValue)
+                formatter.format(state.oneThirdValue),
+                valueTestTag = TestTags.VACATION.TXT_ONE_THIRD
             )
 
             if (state.abonoValue > 0) {
@@ -184,95 +225,167 @@ fun VacationResultCard(state: VacationUiState, formatter: NumberFormat) {
                 )
             }
 
-            Text(
-                text = "${stringResource(R.string.label_total_earnings)}: ${formatter.format(state.totalEarnings)}",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold
+            SummaryRow(
+                label = stringResource(R.string.label_total_earnings),
+                value = formatter.format(state.totalEarnings),
+                testTag = TestTags.VACATION.TXT_TOTAL_EARNINGS,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
-            HorizontalDivider()
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
+            SectionHeader(stringResource(R.string.label_descontos))
             DeductionRow(
                 stringResource(R.string.label_inss_deduction),
-                "- ${formatter.format(state.inssDeduction)}"
+                "- ${formatter.format(state.inssDeduction)}",
+                valueTestTag = TestTags.VACATION.TXT_INSS_DEDUCTION
             )
             DeductionRow(
                 stringResource(R.string.label_irrf_deduction),
-                "- ${formatter.format(state.irrfDeduction)}"
+                "- ${formatter.format(state.irrfDeduction)}",
+                valueTestTag = TestTags.VACATION.TXT_IRRF_DEDUCTION
             )
 
-            Text(
-                text = "${stringResource(R.string.label_total_deductions)}: ${formatter.format(state.totalDeductions)}",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Red
+            SummaryRow(
+                label = stringResource(R.string.label_total_deductions),
+                value = formatter.format(state.totalDeductions),
+                testTag = TestTags.VACATION.TXT_TOTAL_DEDUCTIONS,
+                color = MaterialTheme.colorScheme.error
             )
 
-            HorizontalDivider()
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.label_net_vacation),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = formatter.format(state.netVacation),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF2E7D32)
-                )
-            }
+            NetSummaryRow(
+                label = stringResource(R.string.label_net_vacation),
+                value = formatter.format(state.netVacation),
+                testTag = TestTags.VACATION.TXT_NET_VACATION
+            )
         }
     }
 }
 
 @Composable
-fun EarningsRow(label: String, value: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+private fun SectionHeader(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(top = Dimens.Space4)
+    )
+}
+
+@Composable
+private fun NetSummaryRow(label: String, value: String, testTag: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(Dimens.CornerMedium))
+            .padding(Dimens.Space12)
     ) {
-        Text(text = label, style = MaterialTheme.typography.bodyLarge)
-        Text(text = value, style = MaterialTheme.typography.bodyLarge)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = value,
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier
+                    .testTag(testTag)
+                    .semantics { contentDescription = testTag }
+            )
+        }
     }
 }
 
 @Composable
-fun DeductionRow(label: String, value: String) {
+private fun SummaryRow(label: String, value: String, testTag: String, color: Color) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = label, style = MaterialTheme.typography.bodyLarge)
-        Text(text = value, style = MaterialTheme.typography.bodyLarge, color = Color.Red)
+        Text(text = label, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = color,
+            modifier = Modifier
+                .testTag(testTag)
+                .semantics { contentDescription = testTag }
+        )
+    }
+}
+
+@Composable
+fun EarningsRow(label: String, value: String, valueTestTag: String? = null) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = label, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = if (valueTestTag != null) Modifier
+                .testTag(valueTestTag)
+                .semantics { contentDescription = valueTestTag }
+            else Modifier
+        )
+    }
+}
+
+@Composable
+fun DeductionRow(label: String, value: String, valueTestTag: String? = null) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = label, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.error,
+            modifier = if (valueTestTag != null) Modifier
+                .testTag(valueTestTag)
+                .semantics { contentDescription = valueTestTag }
+            else Modifier
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun VacationContentPreview() {
-    val previewState = VacationUiState(
-        grossSalary = "500000",
-        vacationDays = "30",
-        dependentsCount = "0",
-        sellVacation = true,
-        advanceThirteen = true,
-        vacationDaysValue = 5000.0,
-        oneThirdValue = 1666.67,
-        abonoValue = 1666.67,
-        oneThirdAbonoValue = 555.56,
-        thirteenAdvanceValue = 2500.0,
-        inssDeduction = 758.49,
-        irrfDeduction = 642.38,
-        totalEarnings = 11388.90,
-        totalDeductions = 1400.87,
-        netVacation = 9988.03,
-        showResults = true
-    )
-    VacationContent(state = previewState, onEvent = {})
+    FinanCalcBRTheme {
+        val previewState = VacationUiState(
+            grossSalary = "500000",
+            vacationDays = "30",
+            dependentsCount = "0",
+            sellVacation = true,
+            advanceThirteen = true,
+            vacationDaysValue = 5000.0,
+            oneThirdValue = 1666.67,
+            abonoValue = 1666.67,
+            oneThirdAbonoValue = 555.56,
+            thirteenAdvanceValue = 2500.0,
+            inssDeduction = 758.49,
+            irrfDeduction = 642.38,
+            totalEarnings = 11388.90,
+            totalDeductions = 1400.87,
+            netVacation = 9988.03,
+            showResults = true
+        )
+        VacationContent(state = previewState, onEvent = {})
+    }
 }
