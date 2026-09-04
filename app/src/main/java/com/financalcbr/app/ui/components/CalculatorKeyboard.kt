@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.financalcbr.app.ui.common.TestTags
 import com.financalcbr.app.ui.features.calculator.CalculatorEvent
 import com.financalcbr.app.utils.ConstantsUtils
 
@@ -41,7 +42,8 @@ fun CalculatorKeyboard(
                         label = item.toString(),
                         modifier = Modifier
                             .weight(1f)
-                            .height(buttonHeight.dp)
+                            .height(buttonHeight.dp),
+                        testTag = calculatorTagFor(item.toString())
                     ) {
                         when (item) {
                             "C" -> onEvent(CalculatorEvent.Clear)
@@ -74,7 +76,8 @@ fun CalculatorKeyboard(
                 label = "0",
                 modifier = Modifier
                     .weight(2f)
-                    .height(buttonHeight.dp)
+                    .height(buttonHeight.dp),
+                testTag = TestTags.CALCULATOR.BTN_0
             ) {
                 onEvent(CalculatorEvent.NumberPressed("0"))
             }
@@ -83,7 +86,8 @@ fun CalculatorKeyboard(
                 label = ",",
                 modifier = Modifier
                     .weight(1f)
-                    .height(buttonHeight.dp)
+                    .height(buttonHeight.dp),
+                testTag = TestTags.CALCULATOR.BTN_COMMA
             ) {
                 onEvent(CalculatorEvent.Comma)
             }
@@ -92,10 +96,33 @@ fun CalculatorKeyboard(
                 label = ConstantsUtils.EQUAL.toString(),
                 modifier = Modifier
                     .weight(1f)
-                    .height(buttonHeight.dp)
+                    .height(buttonHeight.dp),
+                testTag = TestTags.CALCULATOR.BTN_EQUAL
             ) {
                 onEvent(CalculatorEvent.Calculate)
             }
         }
+    }
+}
+
+private fun calculatorTagFor(label: String): String? {
+    return when (label) {
+        "C" -> TestTags.CALCULATOR.BTN_CLEAR
+        "⌫" -> TestTags.CALCULATOR.BTN_DELETE
+        ConstantsUtils.PORCENT.toString() -> TestTags.CALCULATOR.BTN_PERCENT
+        ConstantsUtils.DIVD.toString() -> TestTags.CALCULATOR.BTN_DIV
+        "7" -> TestTags.CALCULATOR.BTN_7
+        "8" -> TestTags.CALCULATOR.BTN_8
+        "9" -> TestTags.CALCULATOR.BTN_9
+        ConstantsUtils.MULT.toString() -> TestTags.CALCULATOR.BTN_MULT
+        "4" -> TestTags.CALCULATOR.BTN_4
+        "5" -> TestTags.CALCULATOR.BTN_5
+        "6" -> TestTags.CALCULATOR.BTN_6
+        ConstantsUtils.SUB.toString() -> TestTags.CALCULATOR.BTN_SUB
+        "1" -> TestTags.CALCULATOR.BTN_1
+        "2" -> TestTags.CALCULATOR.BTN_2
+        "3" -> TestTags.CALCULATOR.BTN_3
+        ConstantsUtils.ADD.toString() -> TestTags.CALCULATOR.BTN_ADD
+        else -> null
     }
 }
